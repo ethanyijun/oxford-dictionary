@@ -21,7 +21,13 @@ app.get("/lookup", async (req: Request, res: Response) => {
       }
     );
     const results: Entry = resp.data.results[0].lexicalEntries[0].entries[0];
-    res.send(mapEntryResult(results));
+    const response = {
+      entries: mapEntryResult(results),
+      lexicalCategory:
+        resp.data.results[0].lexicalEntries[0].lexicalCategory.text,
+      word: resp.data.results[0].word,
+    };
+    res.send(response);
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
