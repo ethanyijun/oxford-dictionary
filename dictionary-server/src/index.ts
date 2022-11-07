@@ -1,13 +1,33 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
+import axios from "axios";
+import { Entry } from "./types/types";
+import { mapEntryResult } from "./utils/mapEntryResult";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+app.get("/lookup", async (req: Request, res: Response) => {
+  try {
+    const resp = await axios.get(
+      `https://od-api.oxforddictionaries.com:443/api/v2/entries/${req.query.language}/${req.query.word}`,
+      {
+        headers: {
+          app_id: process.env.APIID,
+          app_key: process.env.APIKEY,
+        },
+      }
+    );
+    const results: Entry = resp.data.results[0].lexicalEntries[0].entries[0];
+    res.send(mapEntryResult(results));
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 });
 
 app.listen(port, () => {
