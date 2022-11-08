@@ -20,6 +20,7 @@ export interface Sense {
 export interface SubSense {
   definitions: string[];
   examples?: { text: string }[];
+  crossReferenceMarkers?: string[];
 }
 
 export interface WordLookUpResponse {

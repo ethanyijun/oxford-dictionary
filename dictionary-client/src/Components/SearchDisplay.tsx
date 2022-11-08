@@ -50,7 +50,6 @@ const SearchDisplay = ({
                   {index + 1}: {sense.definition}
                 </Typography>
               ) : null}
-
               <Typography variant="h6" mb={4} style={{ color: "blue" }}>
                 {sense.example ? ` Example: "${sense.example}"` : null}
               </Typography>
