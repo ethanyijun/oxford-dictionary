@@ -1,6 +1,7 @@
 export interface SenseResponse {
   definition: string;
   example: string;
+  crossReferenceMarkers?: string;
 }
 
 export interface Entry {
@@ -12,10 +13,18 @@ export interface Entry {
 export interface Sense {
   definitions: string[];
   subsenses: SubSense[];
+  crossReferenceMarkers?: string[];
   examples?: { text: string }[];
 }
 
 export interface SubSense {
   definitions: string[];
   examples?: { text: string }[];
+}
+
+export interface WordLookUpResponse {
+  entries: SenseResponse[];
+  lexicalCategory: string;
+  word: string;
+  audio: string;
 }

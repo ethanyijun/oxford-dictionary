@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import axios from "axios";
-import { Entry } from "./types/types";
+import { Entry, WordLookUpResponse } from "./types/types";
 import { mapEntryResult } from "./utils/mapEntryResult";
 
 dotenv.config();
@@ -21,11 +21,14 @@ app.get("/lookup", async (req: Request, res: Response) => {
       }
     );
     const results: Entry = resp.data.results[0].lexicalEntries[0].entries[0];
-    const response = {
+    const response: WordLookUpResponse = {
       entries: mapEntryResult(results),
       lexicalCategory:
         resp.data.results[0].lexicalEntries[0].lexicalCategory.text,
       word: resp.data.results[0].word,
+      audio:
+        resp.data.results[0].lexicalEntries[0].entries[0].pronunciations[0]
+          .audioFile,
     };
     res.send(response);
   } catch (error) {
