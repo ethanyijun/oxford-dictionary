@@ -7,7 +7,6 @@ import { mapEntryResult } from "./utils/mapEntryResult";
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT;
 
 app.get("/lookup", async (req: Request, res: Response) => {
   try {
@@ -39,6 +38,4 @@ app.get("/lookup", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
-});
+export default app;
